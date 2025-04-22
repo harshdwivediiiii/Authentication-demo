@@ -7,7 +7,8 @@
   <section>
     <h2>🗂️ System Diagram</h2>
     <p>Below is the system diagram illustrating the Clerk-based authentication flow:</p>
-   ![Authentication Flow Diagram](/auth-flow-clerk.png)
+  
+  ![Authentication Flow Diagram](/auth-flow-clerk.png)
   </section>
 
   <section>
