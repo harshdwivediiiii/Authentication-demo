@@ -2,20 +2,28 @@
 
 import { motion } from 'framer-motion';
 import { LockKeyhole, LogIn, UserPlus, ChevronRight } from 'lucide-react';
-import Image from 'next/image';
 import { TypeAnimation } from 'react-type-animation';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import InteractiveBackground from '@/components/InteractiveBackground';
 
-const AuthHome = () => {
+
+const AuthHero = () => {
   const { isSignedIn } = useUser();
   const [isMounted, setIsMounted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
+
+    // This will ensure that the code only runs on the client
+    if (typeof window !== 'undefined') {
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setIsDarkMode(darkMode);
+    }
   }, []);
 
   if (!isMounted || typeof isSignedIn === 'undefined') return null;
@@ -41,17 +49,17 @@ const AuthHome = () => {
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gray-100 dark:bg-gray-900">
-      {/* Background */}
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1587474260584-136574528ed7?q=80&w=2940')] bg-cover bg-center opacity-5 dark:opacity-10" />
+    <section className="relative min-h-screen overflow-hidden">
+      {/* Interactive Background with isDarkMode prop */}
+      {isMounted && <InteractiveBackground isDarkMode={isDarkMode} />}
 
-      {/* Content */}
+      {/* Content over the Interactive Background */}
       <div className="relative mx-auto max-w-screen-xl px-4 pt-20 lg:pt-32">
         <motion.div
           initial="initial"
           animate="animate"
           variants={stagger}
-          className="mx-auto max-w-2xl text-center"
+          className="mx-auto max-w-2xl text-center relative z-10"
         >
           <motion.div
             variants={fadeIn}
@@ -118,29 +126,27 @@ const AuthHome = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="mt-20"
+          className="mt-20 relative z-10"
         >
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                Icon: LogIn,
-                title: 'Instant Sign-In',
-                desc: 'Allow users to log in securely using email, password, or social logins.',
-              },
-              {
-                Icon: UserPlus,
-                title: 'Easy Onboarding',
-                desc: 'Seamlessly register users with a beautiful and customizable sign-up flow.',
-              },
-              {
-                Icon: LockKeyhole,
-                title: 'Secure Sessions',
-                desc: 'User sessions are managed with best practices to ensure security and privacy.',
-              },
-            ].map(({ Icon, title, desc }, i) => (
+            {[{
+              Icon: LogIn,
+              title: 'Instant Sign-In',
+              desc: 'Allow users to log in securely using email, password, or social logins.',
+            },
+            {
+              Icon: UserPlus,
+              title: 'Easy Onboarding',
+              desc: 'Seamlessly register users with a beautiful and customizable sign-up flow.',
+            },
+            {
+              Icon: LockKeyhole,
+              title: 'Secure Sessions',
+              desc: 'User sessions are managed with best practices to ensure security and privacy.',
+            }].map(({ Icon, title, desc }, i) => (
               <div key={i} className="relative group">
                 <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-gray-600 to-gray-800 opacity-25 blur transition group-hover:opacity-75 dark:opacity-50" />
-                <div className="relative rounded-lg bg-white p-8 shadow-xl dark:bg-gray-900">
+                <div className="relative rounded-lg bg-white p-8 shadow-xl dark:bg-black">
                   <Icon className="h-10 w-10 text-gray-800 dark:text-gray-400" />
                   <h3 className="mt-4 text-xl font-bold text-gray-900 dark:text-gray-100">{title}</h3>
                   <p className="mt-2 text-gray-600 dark:text-gray-300">{desc}</p>
@@ -155,7 +161,7 @@ const AuthHome = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="mt-20 text-center"
+          className="mt-20 text-center relative z-10"
         >
           <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">Trusted by devs & startups worldwide</p>
           <div className="mt-6 flex justify-center gap-x-8 grayscale opacity-50">
@@ -164,7 +170,7 @@ const AuthHome = () => {
               'https://tailwindui.com/img/logos/reform-logo-gray-900.svg',
               'https://tailwindui.com/img/logos/savvycal-logo-gray-900.svg',
             ].map((src, i) => (
-              <Image key={i} height={32} width={158} className="h-8" src={src} alt="Company" />
+              <img key={i} height={32} width={158} className="h-8" src={src} alt="Company" />
             ))}
           </div>
         </motion.div>
@@ -173,4 +179,4 @@ const AuthHome = () => {
   );
 };
 
-export default AuthHome;
+export default AuthHero;

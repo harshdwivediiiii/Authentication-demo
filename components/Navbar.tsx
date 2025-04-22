@@ -15,7 +15,7 @@ import { SignInButton, SignUpButton } from '@clerk/nextjs';
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between px-4 py-3 shadow-md dark:bg-gray-900 bg-white">
+    <nav className="flex items-center justify-between px-4 py-3 shadow-md dark:bg-black bg-white">
       <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
         Authentication Demo
       </Link>
@@ -62,7 +62,7 @@ const Navbar = () => {
               <Menu className="w-5 h-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="bg-white dark:bg-gray-900">
+          <SheetContent side="right" className="bg-white dark:bg-black">
             <SheetHeader>
               <SheetTitle className="text-lg text-gray-900 dark:text-white">Menu</SheetTitle>
             </SheetHeader>
