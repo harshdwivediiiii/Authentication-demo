@@ -7,7 +7,13 @@
   <section>
     <h2>🗂️ System Diagram</h2>
     <p>Below is the system diagram illustrating the Clerk-based authentication flow:</p>
+<<<<<<< HEAD
    ![Authentication Flow Diagram](https://github.com/harshdwivediiiii/Authentication-demo/blob/main/public/auth-flow-clerk.png)
+=======
+  
+  ![Authentication Flow Diagram](https://github.com/harshdwivediiiii/Authentication-demo/blob/main/public/auth-flow-clerk.png)
+  
+>>>>>>> 36e8a31b8d49efe5f403c0153c3e0fa8b5197ab2
   </section>
 
   <section>
